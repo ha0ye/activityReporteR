@@ -1,22 +1,22 @@
 #' @export
 get_service_data <- function(url,
-                             report_start_date = Sys.Date() - years(1),
+                             report_start_date = Sys.Date() - lubridate::years(1),
                              report_end_date = Sys.Date())
 {
     googlesheets4::read_sheet(url, sheet = "service", col_types = "c") %>%
-        dplyr::filter(is.na(end_time) |
-                   parse_date_time(end_time, "my") >= report_start_date &
-                   parse_date_time(end_time, "my") <= report_end_date)
+        dplyr::filter(is.na(.data$end_time) |
+                          lubridate::parse_date_time(.data$end_time, "my") >= report_start_date &
+                          lubridate::parse_date_time(.data$end_time, "my") <= report_end_date)
 }
 
 #' @export
 get_gs_data <- function(url,
                         sheet = "teaching",
-                        report_start_date = Sys.Date() - years(1),
+                        report_start_date = Sys.Date() - lubridate::years(1),
                         report_end_date = Sys.Date(),
                         date_cols = "date")
 {
-    dat <- googlesheets4::read_sheet(data_gs_url, sheet = sheet, col_types = "c")
+    dat <- googlesheets4::read_sheet(url, sheet = sheet, col_types = "c")
 
     in_period <- in_period(dat, report_start_date, report_end_date, date_cols)
 

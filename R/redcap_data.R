@@ -34,13 +34,13 @@ download_redcap_data <- function(db = c("refstats", "searches"),
 
 #' @export
 read_redcap_data <- function(db = "refstats",
-                             report_start_date = Sys.Date() - years(1),
+                             report_start_date = Sys.Date() - lubridate::years(1),
                              report_end_date = Sys.Date(),
                              date_cols = "date",
                              librarian = "Hao Ye",
                              data_file = here::here("data", paste0(db, "_clean.csv")))
 {
-    dat <- read.csv(data_file)
+    dat <- utils::read.csv(data_file)
 
     in_period <- in_period(dat, report_start_date, report_end_date, date_cols)
 
@@ -61,13 +61,13 @@ convert_redcap_fields <- function(db = "refstats", field = "librarian",
                            out_file = here::here("data", paste0(db, "_clean.csv")))
 {
     # read in data
-    dat <- read.csv(raw_file)
-    dict <- read.csv(dict_file)
+    dat <- utils::read.csv(raw_file)
+    dict <- utils::read.csv(dict_file)
 
     # grab field values
     tx <- dict %>%
-        dplyr::filter(field_name == field) %>%
-        dplyr::pull(select_choices_or_calculations)
+        dplyr::filter(.data$field_name == field) %>%
+        dplyr::pull(.data$select_choices_or_calculations)
 
     # construct field lookup table
     LUT <- tx %>%
@@ -75,12 +75,12 @@ convert_redcap_fields <- function(db = "refstats", field = "librarian",
         t() %>%
         trimws() %>%
         tibble::enframe(name = NULL) %>%
-        tidyr::separate(value, c("key", "value"), sep = ", ")
+        tidyr::separate(.data$value, c("key", "value"), sep = ", ")
 
     # apply field lookup table
     idx <- match(dplyr::pull(dat, field), LUT$key)
     dat[[field]] <- LUT$value[idx]
 
     # write cleaned up data
-    write.csv(dat, out_file)
+    utils::write.csv(dat, out_file)
 }

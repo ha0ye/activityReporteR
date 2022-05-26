@@ -1,6 +1,6 @@
 Package: activityReporteR
 Title: Generate Activity Reports from REDCap and GoogleSheets Data
-Version: 0.0.1
+Version: 0.1.0
 Authors@R: 
     person(given = "Hao",
            family = "Ye",
@@ -25,6 +25,7 @@ Imports:
     purrr,
     REDCapR,
     RefManageR,
+    rlang,
     stringr,
     tibble,
     tidyr

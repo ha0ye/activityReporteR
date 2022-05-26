@@ -5,14 +5,14 @@ print_data <- function(df, empty_message = "(none)\n")
         cat(empty_message)
         return(invisible())
     }
-    
+
     df %>%
-        arrange(desc(date)) %>%
-        pull(to_print) %>% 
+        dplyr::arrange(dplyr::desc(.data$date)) %>%
+        dplyr::pull(.data$to_print) %>%
         cat(sep = "\n")
 }
 
 format_author <- function(df, pattern = "H\\. Ye", replacement = "**H\\. Ye**")
 {
-    mutate(df, to_print = sub({{pattern}}, {{replacement}}, to_print))
+    dplyr::mutate(df, to_print = sub({{pattern}}, {{replacement}}, .data$to_print))
 }
