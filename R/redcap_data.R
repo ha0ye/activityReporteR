@@ -43,11 +43,7 @@ read_redcap_data <- function(db = "refstats",
 {
     dat <- read.csv(data_file)
 
-    in_period <- dat %>%
-        dplyr::select(dplyr::all_of(date_cols)) %>%
-        dplyr::mutate(dplyr::across(dplyr::all_of(date_cols), check_date_col,
-                                    date_start = report_start_date, date_end = report_end_date)) %>%
-        apply(1, any)
+    in_period <- in_period(dat, report_start_date, report_end_date, date_cols)
 
     dplyr::filter(dat, in_period,
                   librarian == {{librarian}})
