@@ -8,7 +8,11 @@
 [![R-CMD-check](https://github.com/ha0ye/activityReporteR/workflows/R-CMD-check/badge.svg)](https://github.com/ha0ye/activityReporteR/actions)
 <!-- badges: end -->
 
-The goal of activityReporteR is to …
+The goal of activityReporteR is to automate activity reporting that
+otherwise requires detailed recordkeeping and formatting. Functions are
+provided to download data from REDCap and GoogleSheets (since these are
+common sources of activity data already), and then format activities
+into appropriate text for reports.
 
 ## Installation
 
