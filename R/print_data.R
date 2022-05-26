@@ -1,3 +1,4 @@
+#' @export
 print_data <- function(df, empty_message = "(none)\n")
 {
     if (is.null(df) || NROW(df) == 0)
@@ -12,6 +13,7 @@ print_data <- function(df, empty_message = "(none)\n")
         cat(sep = "\n")
 }
 
+#' @export
 format_author <- function(df, pattern = "H\\. Ye", replacement = "**H\\. Ye**")
 {
     dplyr::mutate(df, to_print = sub({{pattern}}, {{replacement}}, .data$to_print))
