@@ -1,3 +1,5 @@
+
+#' @export
 download_redcap_data <- function(db = c("refstats", "searches"),
                                  data_folder = "data",
                                  url = "https://redcap.ctsi.ufl.edu/redcap/api/")
@@ -26,14 +28,11 @@ download_redcap_data <- function(db = c("refstats", "searches"),
 
     db <- match.arg(db)
 
-
-    resp <- REDCapR::redcap_read_oneshot(url, token)
-    dat <- resp$data
-
     get_file()
     get_file("metadata", paste0(db, "_dict.csv"))
 }
 
+#' @export
 read_redcap_data <- function(db = "refstats",
                              report_start_date = Sys.Date() - years(1),
                              report_end_date = Sys.Date(),
@@ -49,7 +48,39 @@ read_redcap_data <- function(db = "refstats",
                   librarian == {{librarian}})
 }
 
+#' @export
 get_redcap_token <- function(db)
 {
     Sys.getenv(paste0(db, "_token"))
+}
+
+#' @export
+convert_redcap_fields <- function(db = "refstats", field = "librarian",
+                           raw_file = here::here("data", paste0(db, "_raw.csv")),
+                           dict_file = here::here("data", paste0(db, "_dict.csv")),
+                           out_file = here::here("data", paste0(db, "_clean.csv")))
+{
+    # read in data
+    dat <- read.csv(raw_file)
+    dict <- read.csv(dict_file)
+
+    # grab field values
+    tx <- dict %>%
+        dplyr::filter(field_name == field) %>%
+        dplyr::pull(select_choices_or_calculations)
+
+    # construct field lookup table
+    LUT <- tx %>%
+        stringr::str_split("\\|", simplify = TRUE) %>%
+        t() %>%
+        trimws() %>%
+        tibble::enframe(name = NULL) %>%
+        tidyr::separate(value, c("key", "value"), sep = ", ")
+
+    # apply field lookup table
+    idx <- match(dplyr::pull(dat, field), LUT$key)
+    dat[[field]] <- LUT$value[idx]
+
+    # write cleaned up data
+    write.csv(dat, out_file)
 }

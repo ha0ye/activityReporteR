@@ -21,6 +21,10 @@ Imports:
     here,
     httr,
     lubridate,
+    magrittr,
     purrr,
     REDCapR,
-    RefManageR
+    RefManageR,
+    stringr,
+    tibble,
+    tidyr
