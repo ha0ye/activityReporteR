@@ -12,6 +12,7 @@ Automate activity reporting that otherwise requires detailed recordkeeping and f
 Useful links:
 \itemize{
   \item \url{https://github.com/ha0ye/activityReporteR}
+  \item \url{https://ha0ye.github.io/activityReporteR/}
   \item Report bugs at \url{https://github.com/ha0ye/activityReporteR/issues}
 }
 

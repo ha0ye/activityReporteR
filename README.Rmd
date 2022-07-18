@@ -35,3 +35,8 @@ devtools::install_github("ha0ye/activityReporteR")
 ```
 
 ## Example
+
+
+```{r make cff file, include = FALSE}
+cffr::cff_write(keys = list("type" = "lesson"))
+```

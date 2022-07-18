@@ -1,5 +1,12 @@
-
+#' Download a REDCap database and associated dictionary
+#'
+#' @param db name of database
+#' @param data_folder local folder in which to store files
+#' @param url url for the REDCap API
+#' @return (none)
+#'
 #' @export
+
 download_redcap_data <- function(db = c("refstats", "searches"),
                                  data_folder = "data",
                                  url = "https://redcap.ctsi.ufl.edu/redcap/api/")
@@ -30,6 +37,8 @@ download_redcap_data <- function(db = c("refstats", "searches"),
 
     get_file()
     get_file("metadata", paste0(db, "_dict.csv"))
+
+    invisible()
 }
 
 #' @export
