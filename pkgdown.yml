@@ -1,8 +1,8 @@
 pandoc: 2.7.3
-pkgdown: 2.0.3
+pkgdown: 2.0.6
 pkgdown_sha: ~
 articles: {}
-last_built: 2022-05-26T19:48Z
+last_built: 2022-07-18T20:42Z
 urls:
   reference: https://ha0ye.github.io/activityReporteR/reference
   article: https://ha0ye.github.io/activityReporteR/articles
