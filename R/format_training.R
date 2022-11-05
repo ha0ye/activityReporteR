@@ -21,7 +21,7 @@ format_training <- function(df, type = "uf-training")
 format_training_standard <- function(df)
 {
     df %>%
-        dplyr::mutate(to_print = glue("* {title}, {date}")) %>%
+        dplyr::mutate(to_print = glue("{title}, {date}")) %>%
         dplyr::select(date, .data$to_print)
 }
 
@@ -29,6 +29,6 @@ format_training_standard <- function(df)
 format_training_other <- function(df)
 {
     df %>%
-        dplyr::mutate(to_print = glue("* ({source}) {title}, {date}")) %>%
+        dplyr::mutate(to_print = glue("({source}) {title}, {date}")) %>%
         dplyr::select(date, .data$to_print)
 }

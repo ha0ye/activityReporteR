@@ -31,7 +31,7 @@ format_teaching_standalone <- function(df)
         dplyr::mutate(print_header = glue('"{title}", {duration}-hr workshop')) %>%
         dplyr::summarize(
             to_print = paste(
-                glue("* {date}, {num_attendees} attendees"),
+                glue("{date}, {num_attendees} attendees"),
                 collapse = "\n"),
             date = dplyr::first(.data$date)
         ) %>%

@@ -6,7 +6,7 @@ get_service_data <- function(url,
     googlesheets4::read_sheet(url, sheet = "service", col_types = "c") %>%
         dplyr::filter(is.na(.data$date_end) |
                           lubridate::parse_date_time(.data$date_end, "my") >= report_start_date &
-                          lubridate::parse_date_time(.data$date_end, "my") <= report_end_date)
+                          lubridate::parse_date_time(.data$date_start, "my") <= report_end_date)
 }
 
 #' @export
