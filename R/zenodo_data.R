@@ -11,14 +11,13 @@ get_zenodo_stats <- function()
 #' @export
 get_zenodo_depositions <- function()
 {
-    resp <- make_zenodo_query()
-    dat <- httr::content(resp)
+    dat <- make_zenodo_query()
 
-    tibble::tibble(conceptdoi = purrr::map_chr(dat, purrr::pluck, "conceptdoi"),
-                   doi = purrr::map_chr(dat, purrr::pluck, "doi"),
-                   doi_url = purrr::map_chr(dat, purrr::pluck, "doi_url"),
-                   id = purrr::map_chr(dat, purrr::pluck, "id"),
-                   title = purrr::map_chr(dat, purrr::pluck, "title"))
+    tibble::tibble(conceptdoi = purrr::map_chr(dat, purrr::pluck, "conceptdoi", .default = NA),
+                   doi = purrr::map_chr(dat, purrr::pluck, "doi", .default = NA),
+                   doi_url = purrr::map_chr(dat, purrr::pluck, "doi_url", .default = NA),
+                   id = purrr::map_chr(dat, purrr::pluck, "id", .default = NA),
+                   title = purrr::map_chr(dat, purrr::pluck, "title", .default = NA))
 }
 
 #' @export
@@ -52,20 +51,36 @@ make_zenodo_query <- function(path = "api/deposit/depositions",
                               token = get_zenodo_token(),
                               ...)
 {
-    # setup params for access and any other arguments
-    params <- list(access_token = token,
-                   ...)
+    page_index <- 1
+    results <- list()
 
-    resp <- httr::GET(url = "https://zenodo.org/",
-                      path = path,
-                      query = params)
-
-    if (resp$status_code != 200)
+    repeat
     {
-        stop("Failed to retrieve data.\n", resp)
+        # setup params for access and any other arguments
+        params <- list(access_token = token,
+                       page = page_index,
+                       ...)
+
+        resp <- httr::GET(url = "https://zenodo.org/",
+                          path = path,
+                          query = params)
+
+        if (resp$status_code != 200)
+        {
+            stop("Failed to retrieve data.\n", resp)
+        }
+
+        new_results <- httr::content(resp)
+        if (length(new_results) == 0)
+        {
+            break()
+        }
+
+        results <- c(results, httr::content(resp))
+        page_index <- page_index + 1
     }
 
-    invisible(resp)
+    invisible(results)
 }
 
 
