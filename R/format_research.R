@@ -31,12 +31,12 @@ format_research_paper <- function(to_format, my_bib)
 }
 
 #' @export
-format_research_other <- function(to_format, my_bib)
+format_research_other <- function(to_format, my_bib, ...)
 {
     to_format %>%
         dplyr::mutate(to_print = purrr::map_chr(.data$bib_id, ~ format_ref(my_bib[.x])),
                       to_print = glue("{to_print}\n", .trim = FALSE)) %>%
-        dplyr::select(.data$date, .data$to_print, .data$doi)
+        dplyr::select(.data$date, .data$to_print, ...)
 }
 
 #' @export
