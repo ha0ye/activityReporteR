@@ -6,13 +6,14 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/ha0ye/activityReporteR/workflows/R-CMD-check/badge.svg)](https://github.com/ha0ye/activityReporteR/actions)
+[![R-CMD-check](https://github.com/ha0ye/activityReporteR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ha0ye/activityReporteR/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of activityReporteR is to automate activity reporting that
-otherwise requires detailed recordkeeping and formatting. Functions are
-provided to download data from REDCap and GoogleSheets (since these are
-common sources of activity data already), and then format activities
-into appropriate text for reports.
+The goal of activityReporteR is to streamline the generation of activity
+reports and CV-like documents. Functions are provided to download and
+clean data from REDCap and GoogleSheets (since these are sources for the
+author’s own activities already), and then to format for insertion into
+a R markdown or Quarto document.
 
 ## Installation
 
